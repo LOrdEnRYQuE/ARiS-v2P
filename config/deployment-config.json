@@ -1,0 +1,119 @@
+{
+  "deployment": {
+    "blueGreen": {
+      "enabled": true,
+      "environments": {
+        "blue": {
+          "name": "blue",
+          "replicas": 3,
+          "trafficWeight": 0
+        },
+        "green": {
+          "name": "green",
+          "replicas": 3,
+          "trafficWeight": 100
+        }
+      },
+      "healthCheck": {
+        "enabled": true,
+        "path": "/health",
+        "timeout": "30s",
+        "interval": "10s",
+        "failureThreshold": 3
+      },
+      "rollback": {
+        "enabled": true,
+        "automatic": true,
+        "threshold": 5
+      }
+    },
+    "canary": {
+      "enabled": true,
+      "stages": [
+        {
+          "name": "initial",
+          "trafficPercentage": 10,
+          "duration": "5m",
+          "evaluationCriteria": ["error_rate < 1%", "response_time < 500ms"]
+        },
+        {
+          "name": "gradual",
+          "trafficPercentage": 50,
+          "duration": "10m",
+          "evaluationCriteria": ["error_rate < 1%", "response_time < 500ms"]
+        },
+        {
+          "name": "full",
+          "trafficPercentage": 100,
+          "duration": "15m",
+          "evaluationCriteria": ["error_rate < 1%", "response_time < 500ms"]
+        }
+      ],
+      "rollback": {
+        "enabled": true,
+        "automatic": true,
+        "criteria": ["error_rate > 5%", "response_time > 1000ms"]
+      }
+    },
+    "rolling": {
+      "enabled": true,
+      "strategy": {
+        "type": "RollingUpdate",
+        "maxUnavailable": 1,
+        "maxSurge": 1
+      },
+      "healthCheck": {
+        "enabled": true,
+        "path": "/health",
+        "timeout": "30s",
+        "interval": "10s",
+        "failureThreshold": 3,
+        "successThreshold": 1
+      },
+      "rollback": {
+        "enabled": true,
+        "automatic": true,
+        "threshold": 3
+      }
+    }
+  },
+  "monitoring": {
+    "deployment": {
+      "enabled": true,
+      "metrics": [
+        "deployment_duration",
+        "deployment_success_rate",
+        "rollback_rate",
+        "service_uptime"
+      ],
+      "alerts": [
+        {
+          "name": "deployment_failure",
+          "condition": "deployment_success_rate < 95%",
+          "severity": "high"
+        },
+        {
+          "name": "high_rollback_rate",
+          "condition": "rollback_rate > 10%",
+          "severity": "medium"
+        }
+      ]
+    }
+  },
+  "performance": {
+    "baselines": {
+      "responseTime": 200,
+      "throughput": 1000,
+      "errorRate": 0.1,
+      "cpuUsage": 70,
+      "memoryUsage": 80
+    },
+    "thresholds": {
+      "responseTime": 500,
+      "throughput": 500,
+      "errorRate": 1.0,
+      "cpuUsage": 85,
+      "memoryUsage": 90
+    }
+  }
+} 

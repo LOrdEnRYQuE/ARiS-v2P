@@ -1,0 +1,165 @@
+{
+  "production": {
+    "id": "prod_main",
+    "name": "Main Production Environment",
+    "environment": "production",
+    "deploymentStrategy": "rolling",
+    "applicationPath": "./dist",
+    "scaling": {
+      "minReplicas": 3,
+      "maxReplicas": 10,
+      "targetCPUUtilization": 70,
+      "targetMemoryUtilization": 80,
+      "autoScaling": true,
+      "scalingPolicies": {
+        "cpu": {
+          "threshold": 80,
+          "scaleUp": true,
+          "scaleDown": true
+        },
+        "memory": {
+          "threshold": 85,
+          "scaleUp": true,
+          "scaleDown": true
+        }
+      }
+    },
+    "monitoring": {
+      "enabled": true,
+      "metrics": ["cpu", "memory", "disk", "network", "application"],
+      "collectionInterval": "30s",
+      "retentionPeriod": "30d",
+      "alerts": [
+        {
+          "id": "high_cpu",
+          "name": "High CPU Usage",
+          "condition": "cpu_usage > 80",
+          "threshold": 80,
+          "duration": "5m",
+          "severity": "high",
+          "actions": ["scale_up", "notify_team"]
+        },
+        {
+          "id": "high_memory",
+          "name": "High Memory Usage",
+          "condition": "memory_usage > 85",
+          "threshold": 85,
+          "duration": "5m",
+          "severity": "high",
+          "actions": ["scale_up", "notify_team"]
+        },
+        {
+          "id": "high_error_rate",
+          "name": "High Error Rate",
+          "condition": "error_rate > 5",
+          "threshold": 5,
+          "duration": "2m",
+          "severity": "critical",
+          "actions": ["rollback", "notify_team"]
+        }
+      ],
+      "dashboards": [
+        {
+          "id": "main_dashboard",
+          "name": "Production Overview",
+          "metrics": ["cpu", "memory", "disk", "network"],
+          "layout": [
+            {
+              "id": "cpu_widget",
+              "type": "graph",
+              "title": "CPU Usage",
+              "metrics": ["cpu_usage"],
+              "position": { "x": 0, "y": 0, "width": 6, "height": 4 }
+            },
+            {
+              "id": "memory_widget",
+              "type": "graph",
+              "title": "Memory Usage",
+              "metrics": ["memory_usage"],
+              "position": { "x": 6, "y": 0, "width": 6, "height": 4 }
+            }
+          ]
+        }
+      ]
+    },
+    "security": {
+      "scanning": true,
+      "compliance": ["OWASP", "NIST", "SOC2"],
+      "secrets": {
+        "database_url": "env:DATABASE_URL",
+        "api_key": "env:API_KEY",
+        "jwt_secret": "env:JWT_SECRET"
+      },
+      "vulnerabilityScanning": {
+        "enabled": true,
+        "frequency": "daily",
+        "tools": ["npm audit", "snyk", "owasp-dependency-check"]
+      },
+      "complianceFrameworks": {
+        "OWASP": {
+          "version": "2021",
+          "controls": ["A01:2021", "A02:2021", "A03:2021"]
+        },
+        "NIST": {
+          "version": "800-53",
+          "controls": ["AC", "AU", "CM"]
+        }
+      }
+    },
+    "deployment": {
+      "blueGreen": {
+        "enabled": true,
+        "environments": ["blue", "green"],
+        "trafficSplit": 50
+      },
+      "canary": {
+        "enabled": true,
+        "initialTraffic": 10,
+        "maxTraffic": 50,
+        "evaluationPeriod": "5m"
+      },
+      "rolling": {
+        "enabled": true,
+        "maxUnavailable": 1,
+        "maxSurge": 1
+      }
+    },
+    "disasterRecovery": {
+      "enabled": true,
+      "backup": {
+        "frequency": "daily",
+        "retention": "30d",
+        "location": "/backups/production"
+      },
+      "recovery": {
+        "rto": "4h",
+        "rpo": "1h",
+        "procedures": ["backup_restore", "database_recovery", "application_restart"]
+      }
+    }
+  },
+  "staging": {
+    "id": "prod_staging",
+    "name": "Staging Environment",
+    "environment": "staging",
+    "deploymentStrategy": "recreate",
+    "applicationPath": "./dist-staging",
+    "scaling": {
+      "minReplicas": 1,
+      "maxReplicas": 3,
+      "targetCPUUtilization": 60,
+      "targetMemoryUtilization": 70
+    },
+    "monitoring": {
+      "enabled": true,
+      "metrics": ["cpu", "memory", "application"],
+      "alerts": [],
+      "dashboards": []
+    },
+    "security": {
+      "scanning": true,
+      "compliance": ["OWASP"],
+      "secrets": {}
+    }
+  }
+} 

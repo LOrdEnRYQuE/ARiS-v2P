@@ -1,0 +1,205 @@
+{
+  "projectCortex": {
+    "id": "complete_cortex_main",
+    "name": "Complete Project Cortex Configuration",
+    "environment": "production",
+    "description": "Multi-layered Project Cortex with Vector Store (Layer 1), Graph Database (Layer 2), and Cache Store (Layer 3)",
+    
+    "rag": {
+      "supabase": {
+        "url": "env:SUPABASE_URL",
+        "key": "env:SUPABASE_ANON_KEY",
+        "serviceKey": "env:SUPABASE_SERVICE_ROLE_KEY",
+        "database": {
+          "tableName": "code_chunks",
+          "indexName": "code_chunks_embeddings_idx",
+          "vectorDimension": 1536,
+          "similarityFunction": "cosine"
+        }
+      },
+      
+      "openai": {
+        "apiKey": "env:OPENAI_API_KEY",
+        "embeddingModel": "text-embedding-3-small",
+        "maxTokens": 8192,
+        "temperature": 0.1
+      },
+      
+      "cache": {
+        "redisUrl": "env:REDIS_URL",
+        "redisPassword": "env:REDIS_PASSWORD",
+        "redisDb": 0,
+        "ttl": 3600,
+        "maxMemory": 512
+      },
+      
+      "retrieval": {
+        "maxResults": 10,
+        "similarityThreshold": 0.7,
+        "maxContextLength": 4000,
+        "chunkSize": 1000,
+        "chunkOverlap": 200,
+        "enableCache": true,
+        "cacheHitRate": 0.8
+      },
+      
+      "processing": {
+        "batchSize": 50,
+        "concurrency": 5,
+        "retryAttempts": 3,
+        "timeout": 30000,
+        "enableASTCaching": true,
+        "enableConversationHistory": true
+      },
+      
+      "agents": {
+        "architectus": {
+          "contextTypes": ["architecture", "design_patterns", "best_practices"],
+          "maxContextChunks": 5,
+          "specialization": "system_design",
+          "cachePriority": "high"
+        },
+        "scriba": {
+          "contextTypes": ["code_examples", "implementations", "libraries"],
+          "maxContextChunks": 8,
+          "specialization": "code_generation",
+          "cachePriority": "high"
+        },
+        "auditor": {
+          "contextTypes": ["code_quality", "security", "performance"],
+          "maxContextChunks": 6,
+          "specialization": "code_review",
+          "cachePriority": "medium"
+        },
+        "genesis": {
+          "contextTypes": ["ui_patterns", "frontend", "user_experience"],
+          "maxContextChunks": 4,
+          "specialization": "frontend_development",
+          "cachePriority": "medium"
+        },
+        "executor": {
+          "contextTypes": ["deployment", "automation", "devops"],
+          "maxContextChunks": 5,
+          "specialization": "deployment_automation",
+          "cachePriority": "low"
+        },
+        "prometheus": {
+          "contextTypes": ["project_management", "workflow", "coordination"],
+          "maxContextChunks": 4,
+          "specialization": "project_coordination",
+          "cachePriority": "low"
+        }
+      }
+    },
+    
+    "graph": {
+      "uri": "env:NEO4J_URI",
+      "username": "env:NEO4J_USERNAME",
+      "password": "env:NEO4J_PASSWORD",
+      "database": "neo4j",
+      "maxConnectionPoolSize": 50,
+      "connectionTimeout": 30000
+    },
+    
+    "features": {
+      "impactAnalysis": {
+        "enabled": true,
+        "maxDepth": 3,
+        "includeCircularDependencies": true,
+        "riskThresholds": {
+          "critical": 50,
+          "high": 25,
+          "medium": 10,
+          "low": 5
+        }
+      },
+      
+      "architectureAnalysis": {
+        "enabled": true,
+        "complexityThreshold": 10,
+        "visualizationEnabled": true,
+        "recommendationThreshold": 5
+      },
+      
+      "refactoringSuggestions": {
+        "enabled": true,
+        "maxSuggestions": 10,
+        "priorityThreshold": "medium",
+        "includeImpactAnalysis": true
+      },
+      
+      "dependencyAnalysis": {
+        "enabled": true,
+        "maxDepth": 5,
+        "circularDependencyDetection": true,
+        "dependencyGraph": true
+      }
+    },
+    
+    "monitoring": {
+      "enabled": true,
+      "metrics": {
+        "cacheHitRate": true,
+        "queryLatency": true,
+        "memoryUsage": true,
+        "errorRate": true,
+        "graphComplexity": true,
+        "impactAnalysisAccuracy": true
+      },
+      "logging": {
+        "level": "info",
+        "format": "json",
+        "output": "console"
+      },
+      "alerts": {
+        "highComplexity": true,
+        "circularDependencies": true,
+        "criticalImpact": true,
+        "cacheMissRate": true
+      }
+    },
+    
+    "performance": {
+      "optimization": {
+        "enableQueryCaching": true,
+        "enableASTCaching": true,
+        "enableSessionCaching": true,
+        "enableGraphCaching": true,
+        "cacheWarmup": true,
+        "parallelProcessing": true
+      },
+      "limits": {
+        "maxConcurrentQueries": 20,
+        "maxCacheSize": "1GB",
+        "maxQueryTime": 30000,
+        "maxMemoryUsage": "2GB",
+        "maxGraphNodes": 10000,
+        "maxGraphRelationships": 50000
+      }
+    },
+    
+    "layers": {
+      "layer1": {
+        "name": "Vector Store",
+        "description": "Long-Term Associative Memory",
+        "technology": "Supabase pg_vector",
+        "status": "active",
+        "function": "Semantic code search and retrieval"
+      },
+      "layer2": {
+        "name": "Graph Database",
+        "description": "Structural & Relational Memory",
+        "technology": "Neo4j",
+        "status": "active",
+        "function": "Code relationships and impact analysis"
+      },
+      "layer3": {
+        "name": "Cache Store",
+        "description": "Short-Term Working Memory",
+        "technology": "Redis",
+        "status": "active",
+        "function": "Instantaneous recall for active sessions"
+      }
+    }
+  }
+} 

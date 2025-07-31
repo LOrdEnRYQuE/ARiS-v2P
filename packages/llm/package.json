@@ -1,0 +1,28 @@
+{
+  "name": "@aris/llm",
+  "version": "1.0.0",
+  "description": "LLM service for ARiS agents",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "test": "jest",
+    "test:watch": "jest --watch"
+  },
+  "keywords": ["aris", "llm", "openai", "ai"],
+  "author": "ARiS Team",
+  "license": "MIT",
+  "dependencies": {
+    "@aris/shared": "file:../shared",
+    "openai": "^4.0.0",
+    "dotenv": "^16.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "@types/jest": "^29.0.0",
+    "jest": "^29.0.0",
+    "ts-jest": "^29.0.0",
+    "typescript": "^5.0.0"
+  }
+}

@@ -1,0 +1,164 @@
+{
+  "scaling": {
+    "autoScaling": {
+      "enabled": true,
+      "minReplicas": 2,
+      "maxReplicas": 10,
+      "targetCPUUtilization": 70,
+      "targetMemoryUtilization": 80,
+      "scaleUpCooldown": "300s",
+      "scaleDownCooldown": "300s"
+    },
+    "policies": {
+      "cpu": {
+        "enabled": true,
+        "threshold": 80,
+        "scaleUp": {
+          "enabled": true,
+          "increment": 1,
+          "maxReplicas": 10
+        },
+        "scaleDown": {
+          "enabled": true,
+          "decrement": 1,
+          "minReplicas": 2
+        }
+      },
+      "memory": {
+        "enabled": true,
+        "threshold": 85,
+        "scaleUp": {
+          "enabled": true,
+          "increment": 1,
+          "maxReplicas": 10
+        },
+        "scaleDown": {
+          "enabled": true,
+          "decrement": 1,
+          "minReplicas": 2
+        }
+      },
+      "custom": {
+        "responseTime": {
+          "enabled": true,
+          "threshold": 500,
+          "scaleUp": {
+            "enabled": true,
+            "increment": 1
+          }
+        },
+        "errorRate": {
+          "enabled": true,
+          "threshold": 5,
+          "scaleUp": {
+            "enabled": true,
+            "increment": 1
+          }
+        }
+      }
+    },
+    "schedules": {
+      "enabled": true,
+      "schedules": [
+        {
+          "name": "business-hours",
+          "schedule": "0 9 * * 1-5",
+          "minReplicas": 3,
+          "maxReplicas": 8
+        },
+        {
+          "name": "weekend",
+          "schedule": "0 0 * * 6,0",
+          "minReplicas": 1,
+          "maxReplicas": 3
+        },
+        {
+          "name": "night",
+          "schedule": "0 0 * * *",
+          "minReplicas": 1,
+          "maxReplicas": 2
+        }
+      ]
+    },
+    "monitoring": {
+      "metrics": [
+        "cpu_usage",
+        "memory_usage",
+        "response_time",
+        "error_rate",
+        "throughput"
+      ],
+      "alerts": [
+        {
+          "name": "scaling_failure",
+          "condition": "scaling_operation_failed",
+          "severity": "high"
+        },
+        {
+          "name": "high_resource_usage",
+          "condition": "cpu_usage > 90 OR memory_usage > 90",
+          "severity": "critical"
+        }
+      ]
+    },
+    "optimization": {
+      "enabled": true,
+      "strategies": [
+        {
+          "name": "horizontal_scaling",
+          "enabled": true,
+          "priority": 1
+        },
+        {
+          "name": "vertical_scaling",
+          "enabled": true,
+          "priority": 2
+        },
+        {
+          "name": "load_balancing",
+          "enabled": true,
+          "priority": 3
+        }
+      ],
+      "costOptimization": {
+        "enabled": true,
+        "spotInstances": true,
+        "reservedInstances": true,
+        "autoShutdown": true
+      }
+    }
+  },
+  "performance": {
+    "baselines": {
+      "cpu": {
+        "average": 50,
+        "peak": 80,
+        "threshold": 70
+      },
+      "memory": {
+        "average": 60,
+        "peak": 85,
+        "threshold": 75
+      },
+      "responseTime": {
+        "average": 200,
+        "peak": 500,
+        "threshold": 300
+      },
+      "throughput": {
+        "average": 1000,
+        "peak": 2000,
+        "threshold": 1500
+      }
+    },
+    "optimization": {
+      "enabled": true,
+      "strategies": [
+        "caching",
+        "compression",
+        "load_balancing",
+        "database_optimization"
+      ]
+    }
+  }
+} 

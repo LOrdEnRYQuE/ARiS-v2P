@@ -1,0 +1,24 @@
+{
+  "name": "@aris/agents",
+  "version": "1.0.0",
+  "description": "Multi-agent system for ARiS",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": ["aris", "agents", "ai", "automation"],
+  "author": "ARiS Team",
+  "license": "MIT",
+  "dependencies": {
+    "@aris/shared": "file:../shared",
+    "@aris/llm": "file:../llm",
+    "@aris/ast": "file:../ast"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "typescript": "^5.0.0"
+  }
+}

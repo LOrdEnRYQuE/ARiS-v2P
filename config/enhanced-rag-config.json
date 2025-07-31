@@ -1,0 +1,183 @@
+{
+  "enhancedRag": {
+    "id": "enhanced_rag_main",
+    "name": "Enhanced RAG System Configuration",
+    "environment": "production",
+    "description": "Multi-layered Project Cortex with Vector Store (Layer 1) and Cache Store (Layer 3)",
+    
+    "supabase": {
+      "url": "env:SUPABASE_URL",
+      "key": "env:SUPABASE_ANON_KEY",
+      "serviceKey": "env:SUPABASE_SERVICE_ROLE_KEY",
+      "database": {
+        "tableName": "code_chunks",
+        "indexName": "code_chunks_embeddings_idx",
+        "vectorDimension": 1536,
+        "similarityFunction": "cosine"
+      }
+    },
+    
+    "openai": {
+      "apiKey": "env:OPENAI_API_KEY",
+      "embeddingModel": "text-embedding-3-small",
+      "maxTokens": 8192,
+      "temperature": 0.1
+    },
+    
+    "cache": {
+      "redisUrl": "env:REDIS_URL",
+      "redisPassword": "env:REDIS_PASSWORD",
+      "redisDb": 0,
+      "ttl": 3600,
+      "maxMemory": 512
+    },
+    
+    "retrieval": {
+      "maxResults": 10,
+      "similarityThreshold": 0.7,
+      "maxContextLength": 4000,
+      "chunkSize": 1000,
+      "chunkOverlap": 200,
+      "enableCache": true,
+      "cacheHitRate": 0.8
+    },
+    
+    "processing": {
+      "batchSize": 50,
+      "concurrency": 5,
+      "retryAttempts": 3,
+      "timeout": 30000,
+      "enableASTCaching": true,
+      "enableConversationHistory": true
+    },
+    
+    "agents": {
+      "architectus": {
+        "contextTypes": ["architecture", "design_patterns", "best_practices"],
+        "maxContextChunks": 5,
+        "specialization": "system_design",
+        "cachePriority": "high"
+      },
+      "scriba": {
+        "contextTypes": ["code_examples", "implementations", "libraries"],
+        "maxContextChunks": 8,
+        "specialization": "code_generation",
+        "cachePriority": "high"
+      },
+      "auditor": {
+        "contextTypes": ["code_quality", "security", "performance"],
+        "maxContextChunks": 6,
+        "specialization": "code_review",
+        "cachePriority": "medium"
+      },
+      "genesis": {
+        "contextTypes": ["ui_patterns", "frontend", "user_experience"],
+        "maxContextChunks": 4,
+        "specialization": "frontend_development",
+        "cachePriority": "medium"
+      },
+      "executor": {
+        "contextTypes": ["deployment", "automation", "devops"],
+        "maxContextChunks": 5,
+        "specialization": "deployment_automation",
+        "cachePriority": "low"
+      },
+      "prometheus": {
+        "contextTypes": ["project_management", "workflow", "coordination"],
+        "maxContextChunks": 4,
+        "specialization": "project_coordination",
+        "cachePriority": "low"
+      }
+    },
+    
+    "sources": {
+      "workspace": {
+        "enabled": true,
+        "rootPath": ".",
+        "includePatterns": [
+          "**/*.js",
+          "**/*.ts",
+          "**/*.jsx",
+          "**/*.tsx",
+          "**/*.py",
+          "**/*.java",
+          "**/*.go",
+          "**/*.rs",
+          "**/*.md",
+          "**/*.json"
+        ],
+        "excludePatterns": [
+          "**/node_modules/**",
+          "**/dist/**",
+          "**/build/**",
+          "**/.git/**",
+          "**/coverage/**"
+        ],
+        "maxFileSize": 1024 * 1024
+      },
+      "documentation": {
+        "enabled": true,
+        "frameworks": [
+          {
+            "name": "react",
+            "version": "18.0.0",
+            "url": "https://react.dev",
+            "localPath": "./docs/react"
+          },
+          {
+            "name": "nextjs",
+            "version": "14.0.0",
+            "url": "https://nextjs.org/docs",
+            "localPath": "./docs/nextjs"
+          },
+          {
+            "name": "typescript",
+            "version": "5.0.0",
+            "url": "https://www.typescriptlang.org/docs",
+            "localPath": "./docs/typescript"
+          }
+        ]
+      },
+      "bestPractices": {
+        "enabled": true,
+        "categories": [
+          "security",
+          "performance",
+          "accessibility",
+          "testing",
+          "architecture"
+        ]
+      }
+    },
+    
+    "monitoring": {
+      "enabled": true,
+      "metrics": {
+        "cacheHitRate": true,
+        "queryLatency": true,
+        "memoryUsage": true,
+        "errorRate": true
+      },
+      "logging": {
+        "level": "info",
+        "format": "json",
+        "output": "console"
+      }
+    },
+    
+    "performance": {
+      "optimization": {
+        "enableQueryCaching": true,
+        "enableASTCaching": true,
+        "enableSessionCaching": true,
+        "cacheWarmup": true
+      },
+      "limits": {
+        "maxConcurrentQueries": 10,
+        "maxCacheSize": "512MB",
+        "maxQueryTime": 30000,
+        "maxMemoryUsage": "1GB"
+      }
+    }
+  }
+} 

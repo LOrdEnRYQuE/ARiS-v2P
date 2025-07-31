@@ -1,0 +1,113 @@
+{
+  "name": "aris-vscode-extension",
+  "displayName": "ARiS - Agentic Reactive Intelligence System",
+  "description": "Multi-agent system for intelligent software development",
+  "version": "1.0.0",
+  "publisher": "aris",
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onCommand:aris.hello",
+    "onCommand:aris.startAgent",
+    "onCommand:aris.generateBlueprint",
+    "onCommand:aris.generateCode",
+    "onCommand:aris.enhancedBlueprintToCode",
+    "onCommand:aris.multiAgentCoordination",
+    "onCommand:aris.qualityFeedbackLoop",
+    "onCommand:aris.endToEndProjectGeneration"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "aris.hello",
+        "title": "ARiS: Hello World"
+      },
+      {
+        "command": "aris.startAgent",
+        "title": "ARiS: Start Agent"
+      },
+      {
+        "command": "aris.generateBlueprint",
+        "title": "ARiS: Generate Blueprint"
+      },
+      {
+        "command": "aris.generateCode",
+        "title": "ARiS: Generate Code"
+      },
+      {
+        "command": "aris.enhancedBlueprintToCode",
+        "title": "ARiS: Enhanced Blueprint-to-Code Pipeline"
+      },
+      {
+        "command": "aris.multiAgentCoordination",
+        "title": "ARiS: Multi-Agent Coordination"
+      },
+      {
+        "command": "aris.qualityFeedbackLoop",
+        "title": "ARiS: Quality Feedback Loop"
+      },
+      {
+        "command": "aris.endToEndProjectGeneration",
+        "title": "ARiS: End-to-End Project Generation"
+      }
+    ],
+    "menus": {
+      "commandPalette": [
+        {
+          "command": "aris.hello",
+          "when": "workspaceHasArisProject"
+        },
+        {
+          "command": "aris.startAgent",
+          "when": "workspaceHasArisProject"
+        },
+        {
+          "command": "aris.generateBlueprint",
+          "when": "workspaceHasArisProject"
+        },
+        {
+          "command": "aris.generateCode",
+          "when": "workspaceHasArisProject"
+        },
+        {
+          "command": "aris.enhancedBlueprintToCode",
+          "when": "workspaceHasArisProject"
+        },
+        {
+          "command": "aris.multiAgentCoordination",
+          "when": "workspaceHasArisProject"
+        },
+        {
+          "command": "aris.qualityFeedbackLoop",
+          "when": "workspaceHasArisProject"
+        },
+        {
+          "command": "aris.endToEndProjectGeneration",
+          "when": "workspaceHasArisProject"
+        }
+      ]
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "pretest": "npm run compile && npm run lint",
+    "lint": "eslint src --ext ts",
+    "test": "node ./out/test/runTest.js"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "@types/vscode": "^1.85.0",
+    "@typescript-eslint/eslint-plugin": "^6.21.0",
+    "@typescript-eslint/parser": "^6.21.0",
+    "eslint": "^8.57.1",
+    "typescript": "^5.0.0",
+    "@vscode/vsce": "^2.24.0"
+  }
+}

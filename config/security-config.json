@@ -1,0 +1,124 @@
+{
+  "securityScanning": {
+    "vulnerabilityScan": {
+      "enabled": true,
+      "tools": ["npm audit", "snyk", "owasp-dependency-check"],
+      "frequency": "daily",
+      "severityThresholds": {
+        "critical": 9.0,
+        "high": 7.0,
+        "medium": 4.0,
+        "low": 0.0
+      },
+      "exclusions": [
+        "node_modules",
+        "dist",
+        "build",
+        ".git"
+      ]
+    },
+    "dependencyScan": {
+      "enabled": true,
+      "packageManagers": ["npm", "yarn", "pnpm"],
+      "checkForUpdates": true,
+      "vulnerabilityDatabase": "nvd"
+    },
+    "secretsScan": {
+      "enabled": true,
+      "patterns": [
+        "api_key",
+        "secret",
+        "password",
+        "token",
+        "private_key"
+      ],
+      "exclusions": [
+        "node_modules",
+        "dist",
+        "build"
+      ]
+    },
+    "codeScan": {
+      "enabled": true,
+      "tools": ["eslint-security", "sonarqube"],
+      "rules": [
+        "no-eval",
+        "no-implied-eval",
+        "no-new-func",
+        "no-script-url"
+      ]
+    }
+  },
+  "compliance": {
+    "frameworks": {
+      "OWASP": {
+        "version": "2021",
+        "enabled": true,
+        "controls": [
+          {
+            "id": "A01:2021",
+            "name": "Broken Access Control",
+            "description": "Restrict access to authenticated users only",
+            "status": "enabled"
+          },
+          {
+            "id": "A02:2021",
+            "name": "Cryptographic Failures",
+            "description": "Use strong encryption for sensitive data",
+            "status": "enabled"
+          },
+          {
+            "id": "A03:2021",
+            "name": "Injection",
+            "description": "Validate and sanitize all inputs",
+            "status": "enabled"
+          }
+        ]
+      },
+      "NIST": {
+        "version": "800-53",
+        "enabled": true,
+        "controls": [
+          {
+            "id": "AC-1",
+            "name": "Access Control Policy",
+            "description": "Establish access control policies",
+            "status": "enabled"
+          },
+          {
+            "id": "AU-1",
+            "name": "Audit Policy",
+            "description": "Establish audit policies",
+            "status": "enabled"
+          }
+        ]
+      },
+      "SOC2": {
+        "version": "2017",
+        "enabled": true,
+        "trustServicesCriteria": ["Security", "Availability", "Processing Integrity"]
+      }
+    },
+    "reporting": {
+      "format": "json",
+      "includeEvidence": true,
+      "includeRemediation": true,
+      "retentionPeriod": "1y"
+    }
+  },
+  "monitoring": {
+    "securityEvents": {
+      "enabled": true,
+      "events": [
+        "authentication_failure",
+        "authorization_failure",
+        "data_access",
+        "configuration_change"
+      ],
+      "alerting": {
+        "enabled": true,
+        "channels": ["email", "slack", "webhook"]
+      }
+    }
+  }
+} 

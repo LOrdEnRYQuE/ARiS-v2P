@@ -1,0 +1,25 @@
+{
+  "name": "aris-v2p",
+  "version": "1.0.0",
+  "description": "Agentic Reactive Intelligence System - Multi-agent software development platform",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "build": "turbo run build",
+    "dev": "turbo run dev",
+    "lint": "turbo run lint",
+    "test": "turbo run test",
+    "clean": "turbo run clean",
+    "format": "prettier --write \"**/*.{ts,tsx,md}\""
+  },
+  "keywords": ["ai", "agents", "vscode", "development", "automation"],
+  "author": "ARiS Team",
+  "license": "MIT",
+  "devDependencies": {
+    "turbo": "^1.12.0",
+    "prettier": "^3.1.0"
+  }
+}

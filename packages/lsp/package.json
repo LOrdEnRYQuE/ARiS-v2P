@@ -1,0 +1,22 @@
+{
+  "name": "@aris/lsp",
+  "version": "1.0.0",
+  "description": "Language Server Protocol for ARiS agent communication",
+  "main": "out/server.js",
+  "scripts": {
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": ["lsp", "vscode", "aris", "agents"],
+  "author": "ARiS Team",
+  "license": "MIT",
+  "dependencies": {
+    "vscode-languageserver": "^8.1.0",
+    "vscode-languageserver-textdocument": "^1.0.8"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "typescript": "^5.0.0"
+  }
+}

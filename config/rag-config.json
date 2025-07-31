@@ -1,0 +1,95 @@
+{
+  "rag": {
+    "id": "rag_main",
+    "name": "RAG System Configuration",
+    "environment": "production",
+    "supabase": {
+      "url": "env:SUPABASE_URL",
+      "key": "env:SUPABASE_ANON_KEY",
+      "serviceKey": "env:SUPABASE_SERVICE_ROLE_KEY",
+      "database": {
+        "tableName": "code_chunks",
+        "indexName": "code_chunks_embeddings_idx",
+        "vectorDimension": 1536,
+        "similarityFunction": "cosine"
+      }
+    },
+    "openai": {
+      "apiKey": "env:OPENAI_API_KEY",
+      "embeddingModel": "text-embedding-3-small",
+      "maxTokens": 8192,
+      "temperature": 0.1
+    },
+    "retrieval": {
+      "maxResults": 10,
+      "similarityThreshold": 0.7,
+      "maxContextLength": 4000,
+      "chunkSize": 1000,
+      "chunkOverlap": 200
+    },
+    "agents": {
+      "architectus": {
+        "contextTypes": ["architecture", "design_patterns", "best_practices"],
+        "maxContextChunks": 5,
+        "specialization": "system_design"
+      },
+      "scriba": {
+        "contextTypes": ["code_examples", "implementations", "libraries"],
+        "maxContextChunks": 8,
+        "specialization": "code_generation"
+      },
+      "auditor": {
+        "contextTypes": ["code_quality", "security", "performance"],
+        "maxContextChunks": 6,
+        "specialization": "code_review"
+      },
+      "genesis": {
+        "contextTypes": ["ui_patterns", "frontend", "user_experience"],
+        "maxContextChunks": 4,
+        "specialization": "frontend_development"
+      },
+      "executor": {
+        "contextTypes": ["deployment", "automation", "devops"],
+        "maxContextChunks": 5,
+        "specialization": "deployment_automation"
+      },
+      "prometheus": {
+        "contextTypes": ["project_management", "workflow", "coordination"],
+        "maxContextChunks": 4,
+        "specialization": "project_coordination"
+      }
+    },
+    "sources": {
+      "workspace": {
+        "enabled": true,
+        "fileTypes": [".js", ".ts", ".py", ".java", ".go", ".rs", ".cpp", ".c"],
+        "maxFileSize": 1000000,
+        "excludePatterns": ["node_modules", "dist", "build", ".git"]
+      },
+      "documentation": {
+        "enabled": true,
+        "sources": ["README.md", "docs/", "*.md"],
+        "maxFileSize": 500000
+      },
+      "bestPractices": {
+        "enabled": true,
+        "sources": ["best-practices/", "guidelines/", "standards/"],
+        "curated": true
+      }
+    },
+    "processing": {
+      "batchSize": 50,
+      "concurrency": 5,
+      "retryAttempts": 3,
+      "timeout": 30000
+    },
+    "monitoring": {
+      "enabled": true,
+      "metrics": ["retrieval_accuracy", "embedding_quality", "response_time"],
+      "logging": {
+        "level": "info",
+        "format": "json"
+      }
+    }
+  }
+} 
